@@ -20,7 +20,7 @@ export function Onboarding() {
   const isComplete = formData.companyType && formData.industry && formData.region;
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4">
+    <div className="flex-1 flex items-center justify-center p-4">
       <motion.div 
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -35,7 +35,7 @@ export function Onboarding() {
           </div>
           
           <h1 className="text-3xl font-bold text-white text-center mb-2 tracking-tight">
-            EU Digital Sovereignty
+            SOVR
           </h1>
           <p className="text-slate-400 text-center mb-8 text-sm">
             Assess your Client's digital sovereignty maturity based on the EU Cloud Sovereignty Framework.

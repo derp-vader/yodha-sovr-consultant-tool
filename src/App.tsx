@@ -8,12 +8,13 @@ import { Onboarding } from './components/Onboarding';
 import { Questionnaire } from './components/Questionnaire';
 import { Analyzing } from './components/Analyzing';
 import { Results } from './components/Results';
+import { Footer } from './components/Footer';
 
 function App() {
   const { step } = useAppStore();
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-300 font-sans selection:bg-blue-500/30 relative">
+    <div className="min-h-screen bg-slate-950 text-slate-300 font-sans selection:bg-blue-500/30 relative flex flex-col">
       {/* Background Effects */}
       <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
         {/* Grid Pattern */}
@@ -26,11 +27,14 @@ function App() {
       </div>
 
       {/* Content */}
-      <div className="relative z-10">
-        {step === 'onboarding' && <Onboarding />}
-        {step === 'questionnaire' && <Questionnaire />}
-        {step === 'analyzing' && <Analyzing />}
-        {step === 'results' && <Results />}
+      <div className="relative z-10 flex-1 flex flex-col">
+        <div className="flex-1 flex flex-col">
+          {step === 'onboarding' && <Onboarding />}
+          {step === 'questionnaire' && <Questionnaire />}
+          {step === 'analyzing' && <Analyzing />}
+          {step === 'results' && <Results />}
+        </div>
+        <Footer />
       </div>
     </div>
   );

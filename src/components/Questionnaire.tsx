@@ -21,7 +21,7 @@ export function Questionnaire() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="flex-1 flex flex-col">
       {/* Header & Progress */}
       <header className="bg-slate-950/80 backdrop-blur-md border-b border-white/5 sticky top-0 z-20">
         <div className="max-w-4xl mx-auto px-6 h-16 flex items-center justify-between">

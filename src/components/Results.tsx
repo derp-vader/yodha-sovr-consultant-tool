@@ -65,7 +65,7 @@ export function Results() {
   }));
 
   return (
-    <div className="min-h-screen py-12 px-4 md:px-8">
+    <div className="flex-1 py-12 px-4 md:px-8">
       <div className="max-w-7xl mx-auto flex flex-col lg:flex-row gap-8 items-start">
         
         {/* Left Column - Sticky Stats */}

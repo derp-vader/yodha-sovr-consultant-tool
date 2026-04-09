@@ -6,7 +6,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer
 } from 'recharts';
-import { RefreshCw, ArrowRight, ShieldCheck, CheckCircle2, X, XCircle, RotateCcw } from 'lucide-react';
+import { RefreshCw, ArrowRight, ShieldCheck, CheckCircle2, X, XCircle } from 'lucide-react';
 
 export function Results() {
   const { answers, simulatedReplacements, setSimulation, resetSimulation, resetApp } = useAppStore();
@@ -78,13 +78,6 @@ export function Results() {
               <p className="text-slate-400 mt-1 text-sm">Based on EU Cloud Sovereignty Framework</p>
             </div>
             <div className="flex gap-3">
-              <button 
-                onClick={resetSimulation}
-                className="flex-1 px-4 py-2.5 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl text-sm font-medium text-slate-300 transition-all flex items-center justify-center gap-2"
-              >
-                <RotateCcw size={16} className="text-slate-400" />
-                Reset Simulation
-              </button>
               <button 
                 onClick={resetApp}
                 className="flex-1 px-4 py-2.5 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white rounded-xl text-sm font-medium transition-all flex items-center justify-center gap-2 shadow-[0_0_15px_rgba(37,99,235,0.2)]"

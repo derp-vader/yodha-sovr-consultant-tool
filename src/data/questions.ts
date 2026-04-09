@@ -148,20 +148,6 @@ const aiRecommendations: Recommendation[] = [
 
 export const QUESTIONS: Question[] = [
   {
-    id: 'q_cloud',
-    title: 'Which primary cloud provider do you use?',
-    categories: ['SOV-2', 'SOV-3', 'SOV-4', 'SOV-5'],
-    multiSelect: true,
-    answers: [
-      { id: 'aws', text: 'AWS', score: 0, recommendations: cloudRecommendations, icon: Cloud },
-      { id: 'azure', text: 'Azure', score: 0, recommendations: cloudRecommendations, icon: Cloud },
-      { id: 'gcp', text: 'Google Cloud', score: 0, recommendations: cloudRecommendations, icon: Cloud },
-      { id: 'eu_cloud', text: 'EU Provider (e.g., OVH, Scaleway)', score: 4, icon: Server },
-      { id: 'self_hosted', text: 'Self-hosted (EU)', score: 4, icon: HardDrive },
-      { id: 'other', text: 'Other', score: 2, icon: HelpCircle },
-    ]
-  },
-  {
     id: 'q_db',
     title: 'What database do you primarily use?',
     categories: ['SOV-3', 'SOV-6'],
@@ -373,6 +359,20 @@ export const QUESTIONS: Question[] = [
         { id: 'green_dc', name: 'Move to Green-Certified EU Data Centers', reason: 'EU regulations increasingly require carbon reporting.', pros: ['Regulatory compliance'], cons: ['Migration effort'], recommendedAnswerId: 'optimize' }
       ]},
       { id: 'optimize', text: 'Actively optimize and use green-certified providers', score: 4, icon: Leaf },
+    ]
+  },
+  {
+    id: 'q_cloud',
+    title: 'Which primary cloud provider do you use?',
+    categories: ['SOV-2', 'SOV-3', 'SOV-4', 'SOV-5'],
+    multiSelect: true,
+    answers: [
+      { id: 'aws', text: 'AWS', score: 0, recommendations: cloudRecommendations, icon: Cloud },
+      { id: 'azure', text: 'Azure', score: 0, recommendations: cloudRecommendations, icon: Cloud },
+      { id: 'gcp', text: 'Google Cloud', score: 0, recommendations: cloudRecommendations, icon: Cloud },
+      { id: 'eu_cloud', text: 'EU Provider (e.g., OVH, Scaleway)', score: 4, icon: Server },
+      { id: 'self_hosted', text: 'Self-hosted (EU)', score: 4, icon: HardDrive },
+      { id: 'other', text: 'Other', score: 2, icon: HelpCircle },
     ]
   }
 ];

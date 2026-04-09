@@ -196,7 +196,7 @@ export function Results() {
             <div className="flex flex-col md:flex-row md:items-center justify-between mb-10 gap-4">
               <div>
                 <h2 className="text-2xl font-bold text-white flex items-center gap-3 tracking-tight">
-                  Future Score Simulator
+                  Gaps Identified
                   <span className="bg-blue-500/20 text-blue-400 border border-blue-500/30 text-[10px] px-2.5 py-1 rounded-full font-bold uppercase tracking-widest">Interactive</span>
                 </h2>
                 <p className="text-slate-400 mt-2 text-sm">Click on any recommendation to see pros/cons and simulate migrating.</p>

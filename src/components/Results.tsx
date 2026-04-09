@@ -6,7 +6,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer
 } from 'recharts';
-import { RefreshCw, ArrowRight, ShieldCheck, CheckCircle2, X, XCircle } from 'lucide-react';
+import { RefreshCw, ArrowRight, ShieldCheck, CheckCircle2, X, XCircle, RotateCcw } from 'lucide-react';
 
 export function Results() {
   const { answers, simulatedReplacements, setSimulation, resetSimulation, resetApp } = useAppStore();
@@ -47,9 +47,9 @@ export function Results() {
   }).filter(Boolean) as any[];
 
   const getScoreColor = (score: number) => {
-    if (score >= 80) return 'text-emerald-500';
-    if (score >= 50) return 'text-amber-500';
-    return 'text-rose-500';
+    if (score >= 80) return 'text-emerald-400';
+    if (score >= 50) return 'text-amber-400';
+    return 'text-rose-400';
   };
 
   const getScoreBg = (score: number) => {
@@ -65,7 +65,7 @@ export function Results() {
   }));
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 py-8 px-4">
+    <div className="min-h-screen py-12 px-4 md:px-8">
       <div className="max-w-7xl mx-auto flex flex-col lg:flex-row gap-8 items-start">
         
         {/* Left Column - Sticky Stats */}
@@ -74,19 +74,20 @@ export function Results() {
           {/* Header */}
           <div className="flex flex-col gap-4">
             <div>
-              <h1 className="text-3xl font-bold text-slate-900 dark:text-white">Sovereignty Report</h1>
-              <p className="text-slate-500 dark:text-slate-400 mt-1">Based on EU Cloud Sovereignty Framework</p>
+              <h1 className="text-3xl font-bold text-white tracking-tight">Sovereignty Report</h1>
+              <p className="text-slate-400 mt-1 text-sm">Based on EU Cloud Sovereignty Framework</p>
             </div>
             <div className="flex gap-3">
               <button 
                 onClick={resetSimulation}
-                className="flex-1 px-4 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors"
+                className="flex-1 px-4 py-2.5 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl text-sm font-medium text-slate-300 transition-all flex items-center justify-center gap-2"
               >
+                <RotateCcw size={16} className="text-slate-400" />
                 Reset Simulation
               </button>
               <button 
                 onClick={resetApp}
-                className="flex-1 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-medium transition-colors flex items-center justify-center gap-2"
+                className="flex-1 px-4 py-2.5 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white rounded-xl text-sm font-medium transition-all flex items-center justify-center gap-2 shadow-[0_0_15px_rgba(37,99,235,0.2)]"
               >
                 <RefreshCw size={16} />
                 Retake
@@ -98,34 +99,42 @@ export function Results() {
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-200 dark:border-slate-800 flex flex-col items-center justify-center text-center shadow-sm shrink-0"
+            className="bg-white/5 backdrop-blur-xl rounded-3xl p-8 border border-white/10 flex flex-col items-center justify-center text-center shadow-2xl shrink-0 relative overflow-hidden"
           >
-            <h2 className="text-lg font-medium text-slate-600 dark:text-slate-400 mb-4">Overall Score</h2>
-            <div className="relative">
-              <svg className="w-40 h-40 transform -rotate-90">
-                <circle cx="80" cy="80" r="72" stroke="currentColor" strokeWidth="10" fill="transparent" className="text-slate-100 dark:text-slate-800" />
+            <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-purple-500/5 pointer-events-none" />
+            
+            <h2 className="text-sm font-medium text-slate-400 uppercase tracking-wider mb-6 relative z-10">Overall Score</h2>
+            <div className="relative z-10">
+              <svg className="w-48 h-48 transform -rotate-90">
+                <circle cx="96" cy="96" r="86" stroke="currentColor" strokeWidth="8" fill="transparent" className="text-white/5" />
                 <circle 
-                  cx="80" cy="80" r="72" 
+                  cx="96" cy="96" r="86" 
                   stroke="currentColor" 
-                  strokeWidth="10" 
+                  strokeWidth="8" 
                   fill="transparent" 
-                  strokeDasharray={2 * Math.PI * 72}
-                  strokeDashoffset={2 * Math.PI * 72 * (1 - currentResult.totalScore / 100)}
+                  strokeDasharray={2 * Math.PI * 86}
+                  strokeDashoffset={2 * Math.PI * 86 * (1 - currentResult.totalScore / 100)}
+                  strokeLinecap="round"
                   className={`${getScoreColor(currentResult.totalScore)} transition-all duration-1000 ease-out`} 
                 />
               </svg>
               <div className="absolute inset-0 flex flex-col items-center justify-center">
-                <span className={`text-4xl font-bold ${getScoreColor(currentResult.totalScore)}`}>
+                <span className={`text-5xl font-bold tracking-tighter ${getScoreColor(currentResult.totalScore)}`}>
                   {currentResult.totalScore}
                 </span>
-                <span className="text-sm text-slate-500 dark:text-slate-400 mt-1">/ 100</span>
+                <span className="text-sm text-slate-500 mt-1 font-medium">/ 100</span>
               </div>
             </div>
             
             {scoreDiff > 0 && (
-              <div className="mt-4 inline-flex items-center gap-1 px-3 py-1 bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 rounded-full text-sm font-medium">
+              <motion.div 
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="mt-6 inline-flex items-center gap-1.5 px-4 py-1.5 bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 rounded-full text-sm font-medium shadow-[0_0_15px_rgba(52,211,153,0.1)]"
+              >
+                <ArrowRight size={14} />
                 +{scoreDiff} points simulated
-              </div>
+              </motion.div>
             )}
           </motion.div>
 
@@ -134,16 +143,16 @@ export function Results() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm shrink-0"
+            className="bg-white/5 backdrop-blur-xl rounded-3xl p-6 border border-white/10 shadow-2xl shrink-0"
           >
-            <h2 className="text-lg font-medium text-slate-800 dark:text-slate-200 mb-2">Dimensions</h2>
-            <div className="h-56 w-full">
+            <h2 className="text-sm font-medium text-slate-400 uppercase tracking-wider mb-4">Dimensions</h2>
+            <div className="h-64 w-full">
               <ResponsiveContainer width="100%" height="100%">
-                <RadarChart cx="50%" cy="50%" outerRadius="75%" data={radarData}>
-                  <PolarGrid stroke="#cbd5e1" />
-                  <PolarAngleAxis dataKey="subject" tick={{ fill: '#64748b', fontSize: 11 }} />
+                <RadarChart cx="50%" cy="50%" outerRadius="70%" data={radarData}>
+                  <PolarGrid stroke="rgba(255,255,255,0.1)" />
+                  <PolarAngleAxis dataKey="subject" tick={{ fill: '#94a3b8', fontSize: 11 }} />
                   <PolarRadiusAxis angle={30} domain={[0, 100]} tick={false} axisLine={false} />
-                  <Radar name="Score" dataKey="A" stroke="#2563eb" fill="#3b82f6" fillOpacity={0.5} />
+                  <Radar name="Score" dataKey="A" stroke="#3b82f6" fill="#3b82f6" fillOpacity={0.3} />
                 </RadarChart>
               </ResponsiveContainer>
             </div>
@@ -154,19 +163,19 @@ export function Results() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm shrink-0"
+            className="bg-white/5 backdrop-blur-xl rounded-3xl p-6 border border-white/10 shadow-2xl shrink-0"
           >
-            <h2 className="text-lg font-medium text-slate-800 dark:text-slate-200 mb-4">Detailed Breakdown</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <h2 className="text-sm font-medium text-slate-400 uppercase tracking-wider mb-5">Detailed Breakdown</h2>
+            <div className="grid grid-cols-1 gap-4">
               {currentResult.categories.map((cat) => (
-                <div key={cat.id} className="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800">
-                  <div className="flex justify-between items-start mb-2">
-                    <h3 className="text-xs font-medium text-slate-700 dark:text-slate-300 pr-2 truncate">{cat.name}</h3>
-                    <span className={`text-xs font-bold ${getScoreColor(cat.score)}`}>{cat.score}%</span>
+                <div key={cat.id} className="group">
+                  <div className="flex justify-between items-end mb-2">
+                    <h3 className="text-sm font-medium text-slate-300 group-hover:text-white transition-colors">{cat.name}</h3>
+                    <span className={`text-sm font-bold ${getScoreColor(cat.score)}`}>{cat.score}%</span>
                   </div>
-                  <div className="h-1.5 w-full bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
+                  <div className="h-2 w-full bg-white/5 rounded-full overflow-hidden">
                     <div 
-                      className={`h-full ${getScoreBg(cat.score)} transition-all duration-500`}
+                      className={`h-full ${getScoreBg(cat.score)} transition-all duration-500 shadow-[0_0_10px_currentColor]`}
                       style={{ width: `${cat.score}%` }}
                     />
                   </div>
@@ -182,77 +191,81 @@ export function Results() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
-            className="bg-white dark:bg-slate-900 rounded-2xl p-6 md:p-8 border border-slate-200 dark:border-slate-800 shadow-sm"
+            className="bg-white/5 backdrop-blur-xl rounded-3xl p-6 md:p-10 border border-white/10 shadow-2xl"
           >
-            <div className="flex items-center justify-between mb-8">
+            <div className="flex flex-col md:flex-row md:items-center justify-between mb-10 gap-4">
               <div>
-                <h2 className="text-2xl font-bold text-slate-800 dark:text-slate-200 flex items-center gap-3">
+                <h2 className="text-2xl font-bold text-white flex items-center gap-3 tracking-tight">
                   Future Score Simulator
-                  <span className="bg-blue-100 text-blue-700 dark:bg-blue-900/50 dark:text-blue-300 text-xs px-2.5 py-1 rounded-full font-semibold uppercase tracking-wider">Interactive</span>
+                  <span className="bg-blue-500/20 text-blue-400 border border-blue-500/30 text-[10px] px-2.5 py-1 rounded-full font-bold uppercase tracking-widest">Interactive</span>
                 </h2>
-                <p className="text-slate-500 dark:text-slate-400 mt-2">Click on any recommendation to see pros/cons and simulate migrating.</p>
+                <p className="text-slate-400 mt-2 text-sm">Click on any recommendation to see pros/cons and simulate migrating.</p>
               </div>
             </div>
 
             {recommendations.length === 0 ? (
-              <div className="text-center py-16 bg-emerald-50 dark:bg-emerald-900/20 rounded-2xl border border-emerald-100 dark:border-emerald-800/30">
-                <ShieldCheck className="mx-auto h-16 w-16 text-emerald-500 mb-4" />
-                <h3 className="text-xl font-medium text-emerald-800 dark:text-emerald-300">Excellent Sovereignty!</h3>
-                <p className="text-emerald-600 dark:text-emerald-400 mt-2">We couldn't find any major areas for improvement.</p>
+              <div className="text-center py-20 bg-emerald-500/5 rounded-3xl border border-emerald-500/20">
+                <ShieldCheck className="mx-auto h-16 w-16 text-emerald-400 mb-6" strokeWidth={1.5} />
+                <h3 className="text-2xl font-semibold text-emerald-300 tracking-tight">Excellent Sovereignty!</h3>
+                <p className="text-emerald-400/80 mt-2">We couldn't find any major areas for improvement.</p>
               </div>
             ) : (
-              <div className="space-y-5">
+              <div className="space-y-6">
                 {recommendations.map((rec, idx) => {
                   const activeRec = rec.allRecommendations.find((r: Recommendation) => r.recommendedAnswerId === rec.activeSimulationId);
                   
                   return (
                     <div 
                       key={idx} 
-                      className={`p-6 rounded-2xl border transition-all ${
+                      className={`p-6 md:p-8 rounded-3xl border transition-all duration-300 ${
                         rec.isSimulated 
-                          ? 'border-blue-500 bg-blue-50/50 dark:bg-blue-900/10 shadow-sm' 
-                          : 'border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/50 hover:border-slate-300 dark:hover:border-slate-700'
+                          ? 'border-blue-500/50 bg-blue-500/5 shadow-[0_0_30px_rgba(59,130,246,0.1)]' 
+                          : 'border-white/10 bg-white/5 hover:border-white/20 hover:bg-white/10'
                       }`}
                     >
-                      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
-                        <h3 className="text-lg font-semibold text-slate-900 dark:text-white">
+                      <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4 mb-6">
+                        <h3 className="text-lg font-semibold text-white leading-snug">
                           {rec.question.title}
                         </h3>
-                        <div className="flex gap-1.5 flex-wrap">
+                        <div className="flex gap-2 flex-wrap shrink-0">
                           {rec.question.categories.map((c: string) => (
-                            <span key={c} className="text-[10px] px-2.5 py-1 bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300 rounded-full font-medium">
+                            <span key={c} className="text-[10px] px-2.5 py-1 bg-white/10 text-slate-300 rounded-full font-medium tracking-wide">
                               {c}
                             </span>
                           ))}
                         </div>
                       </div>
                       
-                      <div className="flex flex-wrap items-center gap-3 text-sm mb-5">
-                        <span className={`px-3.5 py-2 rounded-lg ${rec.isSimulated ? 'bg-slate-200 dark:bg-slate-800 text-slate-500 line-through' : 'bg-rose-100 dark:bg-rose-900/30 text-rose-700 dark:text-rose-400 font-medium'}`}>
+                      <div className="flex flex-wrap items-center gap-4 text-sm mb-8 bg-black/20 p-4 rounded-2xl border border-white/5">
+                        <span className={`px-4 py-2 rounded-xl transition-colors ${rec.isSimulated ? 'bg-white/5 text-slate-500 line-through' : 'bg-rose-500/10 border border-rose-500/20 text-rose-400 font-medium'}`}>
                           {rec.originalAnswers.map((a: any) => a.text).join(' + ')}
                         </span>
-                        <ArrowRight size={18} className="text-slate-400" />
+                        <ArrowRight size={16} className="text-slate-500" />
                         {rec.isSimulated && activeRec ? (
-                          <span className="px-3.5 py-2 rounded-lg font-medium bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 flex items-center gap-1.5 shadow-sm">
+                          <motion.span 
+                            initial={{ opacity: 0, scale: 0.9 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            className="px-4 py-2 rounded-xl font-medium bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex items-center gap-2 shadow-[0_0_15px_rgba(52,211,153,0.1)]"
+                          >
                             <CheckCircle2 size={16} />
                             {activeRec.name}
-                          </span>
+                          </motion.span>
                         ) : (
-                          <span className="text-slate-500 dark:text-slate-400 italic">Select an alternative below</span>
+                          <span className="text-slate-500 italic">Select an alternative below</span>
                         )}
                       </div>
 
-                      <div className="flex flex-wrap gap-2.5">
+                      <div className="flex flex-wrap gap-3">
                         {rec.allRecommendations.map((r: Recommendation) => {
                           const isSelected = rec.activeSimulationId === r.recommendedAnswerId;
                           return (
                             <button
                               key={r.id}
                               onClick={() => setSelectedRec({ questionId: rec.question.id, rec: r })}
-                              className={`px-4 py-2 rounded-lg text-sm font-medium transition-all border ${
+                              className={`px-5 py-2.5 rounded-xl text-sm font-medium transition-all border ${
                                 isSelected
-                                  ? 'bg-blue-600 text-white border-blue-600 shadow-md shadow-blue-600/20'
-                                  : 'bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 border-slate-300 dark:border-slate-600 hover:border-blue-400 dark:hover:border-blue-500 hover:shadow-sm'
+                                  ? 'bg-blue-600 text-white border-blue-500 shadow-[0_0_20px_rgba(37,99,235,0.3)]'
+                                  : 'bg-white/5 text-slate-300 border-white/10 hover:border-blue-500/50 hover:bg-white/10'
                               }`}
                             >
                               {r.name}
@@ -273,52 +286,53 @@ export function Results() {
       {/* Modal for Recommendation Details */}
       <AnimatePresence>
         {selectedRec && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm">
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md">
             <motion.div
               initial={{ opacity: 0, scale: 0.95, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              className="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl max-w-lg w-full overflow-hidden border border-slate-200 dark:border-slate-800"
+              transition={{ duration: 0.2, ease: "easeOut" }}
+              className="bg-slate-900 rounded-3xl shadow-2xl max-w-2xl w-full overflow-hidden border border-white/10"
             >
-              <div className="p-6 md:p-8">
-                <div className="flex justify-between items-start mb-5">
-                  <h3 className="text-2xl font-bold text-slate-900 dark:text-white">{selectedRec.rec.name}</h3>
+              <div className="p-8 md:p-10">
+                <div className="flex justify-between items-start mb-8">
+                  <h3 className="text-3xl font-bold text-white tracking-tight">{selectedRec.rec.name}</h3>
                   <button 
                     onClick={() => setSelectedRec(null)} 
-                    className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors p-1 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800"
+                    className="text-slate-500 hover:text-white transition-colors p-2 rounded-full hover:bg-white/10"
                   >
                     <X size={24} />
                   </button>
                 </div>
                 
-                <div className="mb-8">
-                  <h4 className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-3">Why this improves sovereignty</h4>
-                  <p className="text-slate-700 dark:text-slate-300 leading-relaxed text-lg">{selectedRec.rec.reason}</p>
+                <div className="mb-10">
+                  <h4 className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-4">Why this improves sovereignty</h4>
+                  <p className="text-slate-300 leading-relaxed text-lg">{selectedRec.rec.reason}</p>
                 </div>
                 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-8">
-                  <div className="bg-emerald-50 dark:bg-emerald-900/20 p-5 rounded-xl border border-emerald-100 dark:border-emerald-800/30">
-                    <h4 className="font-semibold text-emerald-800 dark:text-emerald-400 mb-4 flex items-center gap-2">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-10">
+                  <div className="bg-emerald-500/5 p-6 rounded-2xl border border-emerald-500/20">
+                    <h4 className="font-semibold text-emerald-400 mb-5 flex items-center gap-2">
                       <CheckCircle2 size={18}/> Pros
                     </h4>
-                    <ul className="text-sm text-emerald-700 dark:text-emerald-300 space-y-3">
+                    <ul className="text-sm text-emerald-200/80 space-y-4">
                       {selectedRec.rec.pros.map((p, i) => (
-                        <li key={i} className="flex items-start gap-2.5">
-                          <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0" />
-                          <span className="leading-snug">{p}</span>
+                        <li key={i} className="flex items-start gap-3">
+                          <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0 shadow-[0_0_5px_rgba(16,185,129,0.5)]" />
+                          <span className="leading-relaxed">{p}</span>
                         </li>
                       ))}
                     </ul>
                   </div>
-                  <div className="bg-rose-50 dark:bg-rose-900/20 p-5 rounded-xl border border-rose-100 dark:border-rose-800/30">
-                    <h4 className="font-semibold text-rose-800 dark:text-rose-400 mb-4 flex items-center gap-2">
+                  <div className="bg-rose-500/5 p-6 rounded-2xl border border-rose-500/20">
+                    <h4 className="font-semibold text-rose-400 mb-5 flex items-center gap-2">
                       <XCircle size={18}/> Cons
                     </h4>
-                    <ul className="text-sm text-rose-700 dark:text-rose-300 space-y-3">
+                    <ul className="text-sm text-rose-200/80 space-y-4">
                       {selectedRec.rec.cons.map((c, i) => (
-                        <li key={i} className="flex items-start gap-2.5">
-                          <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-rose-500 shrink-0" />
-                          <span className="leading-snug">{c}</span>
+                        <li key={i} className="flex items-start gap-3">
+                          <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-rose-500 shrink-0 shadow-[0_0_5px_rgba(244,63,94,0.5)]" />
+                          <span className="leading-relaxed">{c}</span>
                         </li>
                       ))}
                     </ul>
@@ -330,10 +344,10 @@ export function Results() {
                     setSimulation(selectedRec.questionId, selectedRec.rec.recommendedAnswerId);
                     setSelectedRec(null);
                   }}
-                  className={`w-full py-4 rounded-xl font-semibold transition-all flex items-center justify-center gap-2 text-lg ${
+                  className={`w-full py-4 rounded-2xl font-semibold transition-all flex items-center justify-center gap-2 text-lg ${
                     simulatedReplacements[selectedRec.questionId] === selectedRec.rec.recommendedAnswerId 
-                      ? 'bg-slate-200 hover:bg-slate-300 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200' 
-                      : 'bg-blue-600 hover:bg-blue-700 text-white shadow-lg shadow-blue-600/20'
+                      ? 'bg-white/5 hover:bg-white/10 text-slate-300 border border-white/10' 
+                      : 'bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white shadow-[0_0_30px_rgba(37,99,235,0.3)]'
                   }`}
                 >
                   {simulatedReplacements[selectedRec.questionId] === selectedRec.rec.recommendedAnswerId ? (

@@ -1,0 +1,5 @@
+{
+  "name": "EU Digital Sovereignty Analyzer",
+  "description": "An interactive tool that helps companies assess their digital sovereignty maturity based on the EU Cloud Sovereignty Framework.",
+  "requestFramePermissions": []
+}
